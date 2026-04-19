@@ -1,14 +1,15 @@
 export type StreamEventType =
   | "RUN_STARTED"
   | "TRACE_START"
-  | "THINKING_START"
-  | "THINKING_DELTA"
+  | "MEMORY_LOOKUP"
+  | "PLANNER_STEP"
+  | "ROUTE_DECISION"
+  | "SYNTHESIS_START"
   | "TOOL_CALL"
   | "TOOL_DONE"
   | "TEXT_MESSAGE_START"
   | "TEXT_MESSAGE_CHUNK"
   | "TEXT_MESSAGE_END"
-  | "FINAL_RESULT_MARK"
   | "TRACE_END"
   | "RUN_FINISHED"
   | "RUN_ERROR";
@@ -22,9 +23,8 @@ export interface ChatMessage {
   id: string;
   role: "user" | "assistant" | "system";
   content: string;
-  kind?: "text" | "thinking" | "tool" | "error";
+  kind?: "text" | "tool" | "error";
   isStreaming?: boolean;
-  collapsed?: boolean;
 }
 
 export interface GraphNode {
@@ -37,4 +37,5 @@ export interface AgentUIState {
   messages: ChatMessage[];
   graphNodes: GraphNode[];
   isRunning: boolean;
+  threadId: string;
 }
