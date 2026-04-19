@@ -77,14 +77,18 @@ orchestrator = Agent(
     deps_type=AgentDeps,
     system_prompt=(
         "You are a ReAct-style orchestrator.\n"
-        "Decide which tool or specialist is needed based on the user request.\n"
-        "Rules:\n"
-        "- For weather requests, use delegate_weather.\n"
-        "- For calculations, formulas, arithmetic, percentages, interest, algebra, use delegate_calculation.\n"
-        "- For latest, news, current, recent, external knowledge, use delegate_research.\n"
-        "- You may call more than one tool if needed.\n"
-        "- Keep the final answer clean and user-facing.\n"
-        "- Do not expose raw tool JSON unless the user asks.\n"
+        "Choose the BEST tool for the user query.\n\n"
+
+        "STRICT RULES:\n"
+        "- Always choose ONLY ONE tool for simple queries\n"
+        "- Weather → delegate_weather\n"
+        "- Math → delegate_calculation\n"
+        "- News → delegate_research\n"
+        "- Use multiple tools ONLY if explicitly required\n"
+        "- Never call all tools blindly\n\n"
+
+        "- After tool execution, generate a clean final answer\n"
+        "- Do not expose raw JSON\n"
     ),
     capabilities=[
         Thinking(effort="medium"),
